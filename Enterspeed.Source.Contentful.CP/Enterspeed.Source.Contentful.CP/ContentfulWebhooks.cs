@@ -86,15 +86,6 @@ public class ContentfulWebhooks
             return new UnprocessableEntityObjectResult(exception.Message);
         }
 
-
-        //var configuration = _enterspeedConfigurationService.GetConfiguration();
-        //var httpClient = new HttpClient();
-        //var managementClient = new ContentfulManagementClient(httpClient, managementApiKey: "CFPAT-Ok5aM5g8QpLAFuqmco1yAvKrwIdQmS_3BgPT-EIplGc", spaceId: configuration.ContentfulSpaceId);
-
-        //var managementEntry = await managementClient.GetEntry(data.Sys.Id);
-        //var contentType = await managementClient.GetContentType(data.Sys.ContentType.SystemProperties.Id);
-
-
         return new OkObjectResult("OK");
     }
 }

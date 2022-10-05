@@ -1,4 +1,5 @@
 ﻿using Enterspeed.Source.Contentful.CP;
+using Enterspeed.Source.Contentful.CP.Factories;
 using Enterspeed.Source.Contentful.CP.Handlers;
 using Enterspeed.Source.Contentful.CP.Providers;
 using Enterspeed.Source.Contentful.CP.Services;
@@ -27,11 +28,14 @@ public class Startup : FunctionsStartup
         builder.Services.AddSingleton<IJsonSerializer, SystemTextJsonSerializer>();
         builder.Services.AddSingleton<IContentfulClientService, ContentfulClientService>();
         builder.Services.AddSingleton<IEntityIdentityService, EntityIdentityService>();
+        builder.Services.AddSingleton<IContentfulFieldFactory, ContentfulFieldFactory>();
 
         // Field value converters
         builder.Services.AddSingleton<IEnterspeedFieldValueConverter, StringFieldValueConverter>();
         builder.Services.AddSingleton<IEnterspeedFieldValueConverter, NumberFieldValueConverter>();
         builder.Services.AddSingleton<IEnterspeedFieldValueConverter, BooleanFieldValueConverter>();
+        builder.Services.AddSingleton<IEnterspeedFieldValueConverter, ObjectFieldValueConverter>();
+        builder.Services.AddSingleton<IEnterspeedFieldValueConverter, ArrayFieldValueConverter>();
 
         // Event handlers
         builder.Services.AddSingleton<IEnterspeedEventHandler, EntryPublishEventHandler>();

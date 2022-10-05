@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Contentful.Core.Models;
-using Enterspeed.Source.Contentful.CP.Constants;
-using Enterspeed.Source.Contentful.CP.Models;
 using Enterspeed.Source.Contentful.CP.Services.FieldValueConverters;
+using Enterspeed.Source.Contentful.CP.Factories;
+using Enterspeed.Source.Contentful.CP.Models;
 
 namespace Enterspeed.Source.Contentful.CP.Services;
 
@@ -15,10 +15,12 @@ public class EnterspeedPropertyService : IEnterspeedPropertyService
     private const string Description = "description";
     private const string File = "file";
     private readonly IEnumerable<IEnterspeedFieldValueConverter> _fieldValueConverters;
+    private readonly IContentfulFieldFactory _contentfulFieldFactory;
 
-    public EnterspeedPropertyService(IEnumerable<IEnterspeedFieldValueConverter> fieldValueConverters)
+    public EnterspeedPropertyService(IEnumerable<IEnterspeedFieldValueConverter> fieldValueConverters, IContentfulFieldFactory contentfulFieldFactory)
     {
         _fieldValueConverters = fieldValueConverters;
+        _contentfulFieldFactory = contentfulFieldFactory;
     }
 
     public IDictionary<string, IEnterspeedProperty> GetProperties(Entry<dynamic> content)
@@ -26,7 +28,7 @@ public class EnterspeedPropertyService : IEnterspeedPropertyService
         var properties = new Dictionary<string, IEnterspeedProperty>();
         foreach (var field in content.Fields)
         {
-            var contentfulField = new ContentfulField(field);
+            ContentfulField contentfulField = _contentfulFieldFactory.Create(field);
 
             var converter = _fieldValueConverters.FirstOrDefault(x => x.IsConverter(contentfulField));
 
@@ -64,7 +66,6 @@ public class EnterspeedPropertyService : IEnterspeedPropertyService
         {
             ["locale"] = new StringEnterspeedProperty("locale", content.SystemProperties.Locale),
             ["type"] = new StringEnterspeedProperty("type", content.SystemProperties.Type),
-            ["contentType"] = new StringEnterspeedProperty("contentType", content.SystemProperties.ContentType.SystemProperties.Id),
             ["environment"] = new StringEnterspeedProperty("environment", content.SystemProperties.Environment.SystemProperties.Id),
             ["createDate"] = new StringEnterspeedProperty("createDate", content.SystemProperties.CreatedAt?.ToString("yyyy-MM-ddTHH:mm:ss")),
             ["updateDate"] = new StringEnterspeedProperty("updateDate", content.SystemProperties.UpdatedAt?.ToString("yyyy-MM-ddTHH:mm:ss"))
@@ -98,7 +99,6 @@ public class EnterspeedPropertyService : IEnterspeedPropertyService
         {
             ["locale"] = new StringEnterspeedProperty("locale", content.SystemProperties.Locale),
             ["type"] = new StringEnterspeedProperty("type", content.SystemProperties.Type),
-            ["contentType"] = new StringEnterspeedProperty("contentType", WebhooksConstants.Types.Asset),
             ["environment"] = new StringEnterspeedProperty("environment", content.SystemProperties.Environment.SystemProperties.Id),
             ["createDate"] = new StringEnterspeedProperty("createDate", content.SystemProperties.CreatedAt?.ToString("yyyy-MM-ddTHH:mm:ss")),
             ["updateDate"] = new StringEnterspeedProperty("updateDate", content.SystemProperties.UpdatedAt?.ToString("yyyy-MM-ddTHH:mm:ss"))
