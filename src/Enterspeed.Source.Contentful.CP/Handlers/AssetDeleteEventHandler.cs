@@ -7,23 +7,24 @@ using Enterspeed.Source.Sdk.Api.Services;
 
 namespace Enterspeed.Source.Contentful.CP.Handlers;
 
-public class EntryDeleteEventHandler : IEnterspeedEventHandler
+public class AssetDeleteEventHandler : IEnterspeedEventHandler
 {
     private readonly IEnterspeedIngestService _enterspeedIngestService;
     private readonly IEntityIdentityService _entityIdentityService;
     private readonly IContentfulClientService _contentfulClientService;
 
-    public EntryDeleteEventHandler(IEnterspeedIngestService enterspeedIngestService, IEntityIdentityService entityIdentityService, IContentfulClientService contentfulClientService)
+    public AssetDeleteEventHandler(IEnterspeedIngestService enterspeedIngestService, IEntityIdentityService entityIdentityService, IContentfulClientService contentfulClientService)
     {
         _enterspeedIngestService = enterspeedIngestService;
         _entityIdentityService = entityIdentityService;
         _contentfulClientService = contentfulClientService;
     }
+
     public bool CanHandle(IContentfulResource resource, string eventType)
     {
-        return resource?.SystemProperties?.Type == WebhooksConstants.Types.DeletedEntry
-               && !string.IsNullOrWhiteSpace(resource?.SystemProperties?.Id)
-               && eventType == WebhooksConstants.Events.EntryDelete;
+        return resource?.SystemProperties?.Type == WebhooksConstants.Types.DeletedAsset 
+               && !string.IsNullOrWhiteSpace(resource?.SystemProperties?.Id) 
+               && (eventType == WebhooksConstants.Events.AssetDelete || eventType == WebhooksConstants.Events.AssetUnpublish);
     }
 
     public async void Handle(IContentfulResource resource)
