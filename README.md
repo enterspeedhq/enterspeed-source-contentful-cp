@@ -3,4 +3,4 @@
 Enterspeed Contentful Source is an Azure function that takes content from Contentful and ingests into Enterspeed. 
 The Azure function exposes an url that can be used when setting up a webhook in Contentful.
 
-See [documentation](./documentation/readme.md) for more info about how to test the function locally
+See [documentation](./documentation/README.md) for more info about how to test the function locally
