@@ -35,9 +35,6 @@ public class ContentfulWebhooks
             Empty fields are not available through post data or delivery api
             Check all data types from Contentful
                 Rich text
-            References
-                Entry
-                Asset
             
             event types
                 ContentManagement.Entry.publish         - Done
@@ -46,19 +43,19 @@ public class ContentfulWebhooks
                 ContentManagement.Entry.save
                 ContentManagement.Entry.auto_save
                 ContentManagement.Entry.create
-                ContentManagement.Entry.archive         - No need, this will also send a unpublish event
+                ContentManagement.Entry.archive
                 ContentManagement.Entry.unarchive
 
                 ContentManagement.Asset.publish         - Done
                 ContentManagement.Asset.delete          - Done
                 ContentManagement.Asset.unpublish
-                ContentManagement.Asset.archive         - No need, this will also send a unpublish event
+                ContentManagement.Asset.archive
                 ContentManagement.Asset.unarchive
                 ContentManagement.Asset.save
                 ContentManagement.Asset.auto_save
                 ContentManagement.Asset.create
 
-                ContentManagement.Seed
+                ContentManagement.Seed                  - Done
         */
 
         if (!req.Headers.TryGetValue(WebhooksConstants.EventHeaderKey, out var contentfulEventName))
