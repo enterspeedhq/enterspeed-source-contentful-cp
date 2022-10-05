@@ -1,12 +1,5 @@
 # [Enterspeed Contentful Source](https://www.enterspeed.com/)
 
-Enterspeed Contentful Source is an Azure function that takes content from Contentful and ingests into Enterspeed. 
-The Azure function exposes an url that can be used when setting up a webhook in Contentful.
-
-## Status
-
-Note the project is still just an POC and do not support all events and data types in Contentful.
-
 ## Test locally
 
 To test the function locally you must do the following:
