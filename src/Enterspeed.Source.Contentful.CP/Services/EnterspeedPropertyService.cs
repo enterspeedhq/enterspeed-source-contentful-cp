@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Contentful.Core.Models;
+using Contentful.Core.Models.Management;
 using Enterspeed.Source.Contentful.CP.Services.FieldValueConverters;
 using Enterspeed.Source.Contentful.CP.Factories;
 using Enterspeed.Source.Contentful.CP.Models;
@@ -23,7 +24,7 @@ public class EnterspeedPropertyService : IEnterspeedPropertyService
         _contentfulFieldFactory = contentfulFieldFactory;
     }
 
-    public IDictionary<string, IEnterspeedProperty> GetProperties(Entry<dynamic> content)
+    public IDictionary<string, IEnterspeedProperty> GetProperties(Entry<dynamic> content, Locale locale)
     {
         var properties = new Dictionary<string, IEnterspeedProperty>();
         foreach (var field in content.Fields)
@@ -32,7 +33,7 @@ public class EnterspeedPropertyService : IEnterspeedPropertyService
 
             var converter = _fieldValueConverters.FirstOrDefault(x => x.IsConverter(contentfulField));
 
-            var value = converter?.Convert(contentfulField);
+            var value = converter?.Convert(contentfulField, locale);
 
             if (value == null)
             {
@@ -47,7 +48,7 @@ public class EnterspeedPropertyService : IEnterspeedPropertyService
         return properties;
     }
 
-    public IDictionary<string, IEnterspeedProperty> GetProperties(Asset asset)
+    public IDictionary<string, IEnterspeedProperty> GetProperties(Asset asset, Locale locale)
     {
         var properties = new Dictionary<string, IEnterspeedProperty>
         {

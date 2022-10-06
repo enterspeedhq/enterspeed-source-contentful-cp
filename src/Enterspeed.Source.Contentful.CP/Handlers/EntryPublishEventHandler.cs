@@ -1,4 +1,6 @@
-﻿using Contentful.Core.Models;
+﻿using System.Net.Http;
+using Contentful.Core;
+using Contentful.Core.Models;
 using Contentful.Core.Search;
 using Enterspeed.Source.Contentful.CP.Constants;
 using Enterspeed.Source.Contentful.CP.Exceptions;
@@ -41,7 +43,7 @@ public class EntryPublishEventHandler : IEnterspeedEventHandler
             var queryBuilder = QueryBuilder<Entry<dynamic>>.New.LocaleIs(locale.Code);
             var entry = await client.GetEntry(resource.SystemProperties.Id, queryBuilder);
 
-            var entity = new EnterspeedEntity(entry, _enterspeedPropertyService, _entityIdentityService);
+            var entity = new EnterspeedEntity(entry, locale, _enterspeedPropertyService, _entityIdentityService);
 
             var saveResponse = _enterspeedIngestService.Save(entity);
             if (!saveResponse.Success)

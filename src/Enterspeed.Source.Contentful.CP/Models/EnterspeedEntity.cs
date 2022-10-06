@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Contentful.Core.Models;
+using Contentful.Core.Models.Management;
 using Enterspeed.Source.Contentful.CP.Constants;
 using Enterspeed.Source.Contentful.CP.Services;
 using Enterspeed.Source.Sdk.Api.Models;
@@ -9,18 +10,18 @@ namespace Enterspeed.Source.Contentful.CP.Models;
 
 public class EnterspeedEntity : IEnterspeedEntity
 {
-    public EnterspeedEntity(Entry<dynamic> entry, IEnterspeedPropertyService enterspeedPropertyService, IEntityIdentityService entityIdentityService)
+    public EnterspeedEntity(Entry<dynamic> entry, Locale locale, IEnterspeedPropertyService enterspeedPropertyService, IEntityIdentityService entityIdentityService)
     {
         Id = entityIdentityService.GetId(entry);
         Type = entry.SystemProperties.ContentType.SystemProperties.Id;
-        Properties = enterspeedPropertyService.GetProperties(entry);
+        Properties = enterspeedPropertyService.GetProperties(entry, locale);
     }
 
-    public EnterspeedEntity(Asset asset, IEnterspeedPropertyService enterspeedPropertyService, IEntityIdentityService entityIdentityService)
+    public EnterspeedEntity(Asset asset, Locale locale, IEnterspeedPropertyService enterspeedPropertyService, IEntityIdentityService entityIdentityService)
     {
         Id = entityIdentityService.GetId(asset);
         Type = WebhooksConstants.Types.Asset.ToLower();
-        Properties = enterspeedPropertyService.GetProperties(asset);
+        Properties = enterspeedPropertyService.GetProperties(asset, locale);
     }
 
     public string Id { get; }
