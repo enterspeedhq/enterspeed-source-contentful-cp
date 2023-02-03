@@ -32,6 +32,7 @@ public class ContentfulWebhooks
 
         /* TODO missing
             preview
+            locale
             Empty fields are not available through post data or delivery api
             Check all data types from Contentful
                 Rich text
@@ -39,7 +40,7 @@ public class ContentfulWebhooks
             event types
                 ContentManagement.Entry.publish         - Done
                 ContentManagement.Entry.delete          - Done
-                ContentManagement.Entry.unpublish
+                ContentManagement.Entry.unpublish       - Done
                 ContentManagement.Entry.save
                 ContentManagement.Entry.auto_save
                 ContentManagement.Entry.create
@@ -48,7 +49,7 @@ public class ContentfulWebhooks
 
                 ContentManagement.Asset.publish         - Done
                 ContentManagement.Asset.delete          - Done
-                ContentManagement.Asset.unpublish
+                ContentManagement.Asset.unpublish       - Done
                 ContentManagement.Asset.archive
                 ContentManagement.Asset.unarchive
                 ContentManagement.Asset.save
