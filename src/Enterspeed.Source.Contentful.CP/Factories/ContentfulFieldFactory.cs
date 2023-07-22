@@ -9,14 +9,14 @@ public class ContentfulFieldFactory : IContentfulFieldFactory
     {
         if (field.Value.GetType() == typeof(JObject))
         {
-            if (!string.IsNullOrEmpty(field.Value["nodeType"]?.Value))
+            if (!string.IsNullOrEmpty(field.Value["nodeType"]?.Value) && field.Value["nodeType"]?.Value.Equals("document", System.StringComparison.InvariantCultureIgnoreCase))
                 return new ContentfulDocumentField(field);
             return new ContentfulObjectField(field);
         }
-        
+
         if (field.Value.GetType() == typeof(JArray))
             return new ContentfulArrayField(field);
-        
+
         return new ContentfulSimpleField(field);
     }
 }
