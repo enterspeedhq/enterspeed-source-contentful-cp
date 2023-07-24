@@ -20,8 +20,3 @@ public class ContentfulFieldFactory : IContentfulFieldFactory
         return new ContentfulSimpleField(field);
     }
 }
-
-public interface IContentfulFieldFactory
-{
-    ContentfulField Create(dynamic field);
-}
